@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ValueObjects\TradeSide;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $user_id
  * @property int $coin_id
- * @property string $side
+ * @property TradeSide $side
  * @property string $maker_order_id
  * @property string $taker_order_id
  * @property string $price
@@ -43,6 +44,7 @@ class Trade extends Model
     public function casts(): array
     {
         return [
+            'side' => TradeSide::class,
             'price' => 'decimal:8',
             'volume' => 'decimal:8',
         ];

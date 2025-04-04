@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\ValueObjects\OrderDirection;
+use App\ValueObjects\OrderStatus;
+use App\ValueObjects\OrderType;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,11 +12,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property int $coin_id
  * @property string $idempotency_key
- * @property string $direction
- * @property string $type
+ * @property OrderDirection $direction
+ * @property OrderType $type
  * @property string $price
  * @property string $volume
- * @property string $status
+ * @property OrderStatus $status
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  */
@@ -43,8 +46,11 @@ class Order extends Model
     public function casts(): array
     {
         return [
+            'direction' => OrderDirection::class,
+            'type' => OrderType::class,
             'price' => 'decimal:8',
             'volume' => 'decimal:8',
+            'status' => OrderStatus::class,
         ];
     }
 
