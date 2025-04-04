@@ -47,4 +47,36 @@ class Trade extends Model
             'volume' => 'decimal:8',
         ];
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Coin>
+     */
+    public function coin()
+    {
+        return $this->belongsTo(Coin::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Order>
+     */
+    public function makerOrder()
+    {
+        return $this->belongsTo(Order::class, 'maker_order_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Order>
+     */
+    public function takerOrder()
+    {
+        return $this->belongsTo(Order::class, 'taker_order_id', 'id');
+    }
 }

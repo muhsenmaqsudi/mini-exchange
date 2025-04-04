@@ -45,4 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * @return HasMany<Order>
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return HasMany<Trade>
+     */
+    public function trades()
+    {
+        return $this->hasMany(Trade::class);
+    }
 }
