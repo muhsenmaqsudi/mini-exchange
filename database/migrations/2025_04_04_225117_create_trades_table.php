@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger(column: 'id')->primary();
             $table->unsignedBigInteger(column: 'user_id');
             $table->unsignedBigInteger(column: 'coin_id');
-            $table->enum(column: 'type', allowed: ['TAKER', 'MAKER']);
+            $table->enum(column: 'side', allowed: ['TAKER', 'MAKER']);
             $table->unsignedBigInteger(column: 'maker_order_id');
             $table->unsignedInteger(column: 'taker_order_id');
             $table->decimal(column: 'price', total: 18, places: 8);
