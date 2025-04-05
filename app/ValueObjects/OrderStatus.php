@@ -2,8 +2,12 @@
 
 namespace App\ValueObjects;
 
+use App\Concerns\InteractsWithEnum;
+
 enum OrderStatus: string
 {
+    use InteractsWithEnum;
+    
     case OPEN = 'open';
     case MATCHED = 'matched';
     case PARTIALLY_MATCHED = 'partially_matched';

@@ -2,8 +2,12 @@
 
 namespace App\ValueObjects;
 
+use App\Concerns\InteractsWithEnum;
+
 enum OrderType: string
 {
+    use InteractsWithEnum;
+
     case SPOT = 'spot';
     case FUTURES = 'futures';
     case LIMIT = 'limit';

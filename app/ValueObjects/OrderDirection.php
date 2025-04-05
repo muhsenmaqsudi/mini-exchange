@@ -2,8 +2,12 @@
 
 namespace App\ValueObjects;
 
+use App\Concerns\InteractsWithEnum;
+
 enum OrderDirection: string
 {
+    use InteractsWithEnum;
+
     case BUY = 'buy';
     case SELL = 'sell';
 

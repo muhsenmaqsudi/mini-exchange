@@ -2,8 +2,12 @@
 
 namespace App\ValueObjects;
 
+use App\Concerns\InteractsWithEnum;
+
 enum TradeSide: string
 {
+    use InteractsWithEnum;
+
     case MAKER = 'maker';
     case TAKER = 'taker';
 
