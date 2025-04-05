@@ -1,5 +1,6 @@
 <?php
 
+use App\ValueObjects\TradeSide;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger(column: 'id')->primary();
             $table->unsignedBigInteger(column: 'user_id');
             $table->unsignedBigInteger(column: 'coin_id');
-            $table->enum(column: 'side', allowed: ['TAKER', 'MAKER']);
+            $table->enum(column: 'side', allowed: TradeSide::values());
             $table->unsignedBigInteger(column: 'maker_order_id');
             $table->unsignedInteger(column: 'taker_order_id');
             $table->decimal(column: 'price', total: 18, places: 8);
