@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\AsJson;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,10 +26,15 @@ class Coin extends Model
         'config',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     public function casts(): array
     {
         return [
-            'config' => 'array',
+            'config' => AsJson::class,
         ];
     }
 
