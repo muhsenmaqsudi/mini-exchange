@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $symbol
- * @property int $precision
+ * @property array $config
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  */
@@ -22,13 +22,13 @@ class Coin extends Model
     protected $fillable = [
         'name',
         'symbol',
-        'precision',
+        'config',
     ];
 
     public function casts(): array
     {
         return [
-            'precision' => 'int',
+            'config' => 'array',
         ];
     }
 

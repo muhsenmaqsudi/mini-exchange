@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger(column: 'id')->primary();
             $table->string(column: 'name', length: 15);
             $table->string(column: 'symbol', length: 10);
-            $table->integer(column: 'precision');
+            $table->jsonb(column: 'config')->nullable();
             $table->timestamps();
         });
     }
