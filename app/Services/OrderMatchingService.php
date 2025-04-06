@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Concerns\Makeable;
 use App\Models\Order;
 use App\Models\Trade;
-use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderStatus;
 use App\ValueObjects\TradeSide;
 use Illuminate\Support\Facades\DB;
@@ -50,11 +49,10 @@ class OrderMatchingService
                 'taker_order_id' => $takerOrder->id,
                 'maker_order_id' => $makerOrder->id,
                 'side' => TradeSide::TAKER,
-                'price' => $makerOrder->price, // Trade executes at maker's price
+                'price' => $makerOrder->price,
                 'volume' => $takerOrder->volume,
             ]);
 
-            // Create trade record for maker
             Trade::create([
                 'user_id' => $makerOrder->user_id,
                 'coin_id' => $makerOrder->coin_id,
@@ -65,7 +63,6 @@ class OrderMatchingService
                 'volume' => $makerOrder->volume,
             ]);
 
-            // Mark both orders as filled
             $newOrder->status = OrderStatus::MATCHED;
             $matchingOrder->status = OrderStatus::MATCHED;
             
