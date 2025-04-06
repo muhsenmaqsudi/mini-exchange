@@ -8,10 +8,10 @@ enum OrderStatus: string
 {
     use InteractsWithEnum;
     
-    case OPEN = 'open';
-    case MATCHED = 'matched';
-    case PARTIALLY_MATCHED = 'partially_matched';
-    case CANCELED = 'canceled';
+    case OPEN = 'OPEN';
+    case MATCHED = 'MATCHED';
+    case PARTIALLY_MATCHED = 'PARTIALLY_MATCHED';
+    case CANCELED = 'CANCELED';
 
     public function isOpen(): bool
     {
