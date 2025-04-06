@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderBookController;
 use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\CoinController;
 use App\Http\Controllers\V1\SpotOrderPlacementController;
@@ -12,4 +13,5 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function() {
     Route::get('/coins', [CoinController::class, 'index'])->withoutMiddleware('auth:sanctum')->name('coins.index');
 
     Route::post('/orders/spot', SpotOrderPlacementController::class)->name('orders.placement.spot');
+    Route::get('/orders/book', OrderBookController::class)->name('orders.book');
 });
