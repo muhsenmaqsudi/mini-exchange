@@ -2,6 +2,7 @@
 
 namespace App\Http\DataObjects;
 
+use App\Models\Coin;
 use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderType;
 use Illuminate\Contracts\Support\Arrayable;
@@ -9,7 +10,9 @@ use Illuminate\Support\Str;
 
 class SpotOrderPlacementDTO implements Arrayable
 {
-    private array $mergedData = [];
+    protected array $mergedData = [];
+
+    protected ?Coin $coin;
 
     /**
      * Create a new class instance.
@@ -31,6 +34,7 @@ class SpotOrderPlacementDTO implements Arrayable
             'price' => $this->price,
             'volume' => $this->volume,
             'idempotency_key' => $this->idempotencyKey ?? Str::uuid(),
+            'coin_id' => $this->coin->id,
             ...$this->mergedData,
         ];
     }
@@ -38,5 +42,15 @@ class SpotOrderPlacementDTO implements Arrayable
     public function merge(array $data): void
     {
         $this->mergedData = $data;
+    }
+
+    public function setCoin(?Coin $coin): void
+    {
+        $this->coin = $coin;
+    }
+
+    public function getCoin(): ?Coin
+    {
+        return $this->coin;
     }
 }

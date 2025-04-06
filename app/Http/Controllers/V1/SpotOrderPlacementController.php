@@ -2,34 +2,38 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Actions\StoreSpotOrderAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SpotOrderPlacementRequest;
+use App\Http\Validators\SpotOrderValidator;
 use App\Models\Coin;
-use App\Models\Order;
-use App\ValueObjects\OrderStatus;
-use Illuminate\Support\Facades\Auth;
 
 class SpotOrderPlacementController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public function __invoke(SpotOrderPlacementRequest $request)
     {
         $orderDTO = $request->toDTO();
 
-        $coin = Coin::query()->where(column: 'symbol', operator: '=', value: $orderDTO->symbol)->first();
+        $coin = Coin::query()
+            ->where(column: 'symbol', operator: '=', value: $orderDTO->symbol)
+            ->first();
 
-        if (!$coin) {
+        $orderDTO->setCoin(coin: $coin);
+
+        $spotOrderValidator = new SpotOrderValidator(dto: $orderDTO);
+
+        if (! $spotOrderValidator->isProvidedSymbolCorrect()) {
             throw new \Exception(message: 'Invalid symbol provided');
         }
 
-        $orderData = [
-            'user_id' => Auth::id(),
-            'coin_id' => $coin->id,
-            'status' => OrderStatus::OPEN,
-        ];
-
-        $orderDTO->merge(data: $orderData);
-
-        $order = Order::query()->create(attributes: $orderDTO->toArray());
+        try {
+            $order = StoreSpotOrderAction::make()->handle(dto: $orderDTO);
+        } catch (\Throwable $th) {
+            throw new \Exception(message: 'Query exception');
+        }
 
         return response()->json(data: $order);
     }
