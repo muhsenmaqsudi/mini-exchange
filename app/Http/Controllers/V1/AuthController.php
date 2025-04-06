@@ -4,12 +4,14 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UserLoginRequest;
+use App\Http\Resources\UserResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function token(UserLoginRequest $request)
+    public function token(UserLoginRequest $request): JsonResponse
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json(['message' => 'Invalid credentials'], 401);
@@ -24,8 +26,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function whoami(Request $request)
+    public function whoami(Request $request): UserResource
     {
-        return response()->json($request->user());
+        return UserResource::make($request->user());
     }
 }
