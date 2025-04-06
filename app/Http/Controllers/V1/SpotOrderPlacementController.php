@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SpotOrderPlacementRequest;
 use App\Http\Validators\SpotOrderValidator;
 use App\Models\Coin;
+use App\Services\OrderMatchingService;
 
 class SpotOrderPlacementController extends Controller
 {
@@ -31,7 +32,10 @@ class SpotOrderPlacementController extends Controller
 
         try {
             $order = StoreSpotOrderAction::make()->handle(dto: $orderDTO);
+
+            OrderMatchingService::make()->match(newOrder: $order);
         } catch (\Throwable $th) {
+            dd($th);
             throw new \Exception(message: 'Query exception');
         }
 

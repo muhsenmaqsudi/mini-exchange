@@ -8,8 +8,8 @@ enum TradeSide: string
 {
     use InteractsWithEnum;
 
-    case MAKER = 'maker';
-    case TAKER = 'taker';
+    case MAKER = 'MAKER';
+    case TAKER = 'TAKER';
 
     public function isMaker(): bool
     {

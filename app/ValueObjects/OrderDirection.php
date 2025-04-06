@@ -15,4 +15,14 @@ enum OrderDirection: string
     {
         return $this === self::BUY ? self::SELL : self::BUY;
     }
+
+    public function ordering()
+    {
+        return $this === self::BUY ? 'desc' : 'asc';
+    }
+
+    public function filtering()
+    {
+        return $this === self::BUY ? '<=' : '>=';
+    }
 }
