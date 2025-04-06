@@ -4,6 +4,7 @@ use App\Http\Controllers\OrderBookController;
 use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\CoinController;
 use App\Http\Controllers\V1\SpotOrderPlacementController;
+use App\Http\Controllers\V1\TradeController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function() {
@@ -14,4 +15,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function() {
 
     Route::post('/orders/spot', SpotOrderPlacementController::class)->name('orders.placement.spot');
     Route::get('/orders/book', OrderBookController::class)->name('orders.book');
+
+    Route::get('/trades', [TradeController::class, 'index'])->name('trades.index');
 });
