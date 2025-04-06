@@ -14,11 +14,11 @@ class AuthController extends Controller
     public function token(UserLoginRequest $request): JsonResponse
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return response()->json(data: ['message' => 'Invalid credentials'], status: 401);
         }
 
         $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken(name: 'auth_token')->plainTextToken;
 
         return response()->json([
             'type' => 'Bearer',

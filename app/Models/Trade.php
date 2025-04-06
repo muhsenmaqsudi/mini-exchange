@@ -5,19 +5,17 @@ namespace App\Models;
 use App\ValueObjects\TradeSide;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * App\Models\Trade
- *
+/** 
  * @property int $id
  * @property int $user_id
  * @property int $coin_id
  * @property TradeSide $side
- * @property string $maker_order_id
- * @property string $taker_order_id
+ * @property int $maker_order_id
+ * @property int $taker_order_id
  * @property string $price
  * @property string $volume
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
  */
 class Trade extends Model
 {

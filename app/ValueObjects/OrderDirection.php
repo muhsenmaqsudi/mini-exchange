@@ -8,8 +8,8 @@ enum OrderDirection: string
 {
     use InteractsWithEnum;
 
-    case BUY = 'buy';
-    case SELL = 'sell';
+    case BUY = 'BUY';
+    case SELL = 'SELL';
 
     public function opposite(): self
     {
