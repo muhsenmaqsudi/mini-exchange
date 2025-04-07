@@ -5,6 +5,7 @@ namespace App\Models;
 use App\ValueObjects\TradeSide;
 use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /** 
  * @property string $id
@@ -57,33 +58,33 @@ class Trade extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
+     * @return BelongsTo<User>
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Coin>
+     * @return BelongsTo<Coin>
      */
-    public function coin()
+    public function coin(): BelongsTo
     {
         return $this->belongsTo(Coin::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Order>
+     * @return BelongsTo<Order>
      */
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Order>
+     * @return BelongsTo<Order>
      */
-    public function counterOrder()
+    public function counterOrder(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'counter_order_id', 'id');
     }

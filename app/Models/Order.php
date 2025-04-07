@@ -7,6 +7,8 @@ use App\ValueObjects\OrderStatus;
 use App\ValueObjects\OrderType;
 use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $id
@@ -61,25 +63,25 @@ class Order extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
+     * @return BelongsTo<User>
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Coin>
+     * @return BelongsTo<Coin>
      */
-    public function coin()
+    public function coin(): BelongsTo
     {
         return $this->belongsTo(Coin::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne<Trade>
+     * @return HasOne<Trade>
      */
-    public function trade()
+    public function trade(): HasOne
     {
         return $this->hasOne(Trade::class, 'order_id', 'id');
     }
