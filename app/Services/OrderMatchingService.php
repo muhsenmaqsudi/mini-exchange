@@ -63,8 +63,8 @@ class OrderMatchingService
                 'volume' => $makerOrder->volume,
             ]);
 
-            $newOrder->status = OrderStatus::MATCHED;
-            $matchingOrder->status = OrderStatus::MATCHED;
+            $newOrder->status = OrderStatus::FILLED;
+            $matchingOrder->status = OrderStatus::FILLED;
             
             $newOrder->save();
             $matchingOrder->save();

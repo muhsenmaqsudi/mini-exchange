@@ -9,8 +9,8 @@ enum OrderStatus: string
     use InteractsWithEnum;
     
     case OPEN = 'OPEN';
-    case MATCHED = 'MATCHED';
-    case PARTIALLY_MATCHED = 'PARTIALLY_MATCHED';
+    case FILLED = 'FILLED';
+    case PARTIALLY_FILLED = 'PARTIALLY_FILLED';
     case CANCELED = 'CANCELED';
 
     public function isOpen(): bool
@@ -18,14 +18,14 @@ enum OrderStatus: string
         return $this === self::OPEN;
     }
     
-    public function isMatched(): bool
+    public function isFilled(): bool
     {
-        return $this === self::MATCHED;
+        return $this === self::FILLED;
     }
 
-    public function isPartiallyMatched(): bool
+    public function isPartiallyFilled(): bool
     {
-        return $this === self::PARTIALLY_MATCHED;
+        return $this === self::PARTIALLY_FILLED;
     }
 
     public function isCanceled(): bool
