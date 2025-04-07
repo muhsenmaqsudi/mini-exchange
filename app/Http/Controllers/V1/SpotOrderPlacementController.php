@@ -35,7 +35,6 @@ class SpotOrderPlacementController extends Controller
 
             OrderMatchingService::make()->match(newOrder: $order);
         } catch (\Throwable $th) {
-            dd($th);
             throw new \Exception(message: 'Query exception');
         }
 

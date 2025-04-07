@@ -73,16 +73,8 @@ class Order extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne<Trade>
      */
-    public function makerTrade()
+    public function trade()
     {
-        return $this->hasOne(Trade::class, 'maker_order_id', 'id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne<Trade>
-     */
-    public function takerTrade()
-    {
-        return $this->hasOne(Trade::class, 'taker_order_id', 'id');
+        return $this->hasOne(Trade::class, 'order_id', 'id');
     }
 }

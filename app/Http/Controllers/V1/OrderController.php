@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        return Order::with(relations: ['coin', 'user', 'makerTrade', 'takerTrade'])
+        return Order::with(relations: ['coin', 'user', 'trade', 'trade.counterOrder'])
             ->where(column: 'user_id', operator: '=', value: Auth::id())
             ->latest()
             ->get();

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger(column: 'user_id');
             $table->unsignedBigInteger(column: 'coin_id');
             $table->enum(column: 'side', allowed: TradeSide::values());
-            $table->unsignedBigInteger(column: 'maker_order_id');
-            $table->unsignedInteger(column: 'taker_order_id');
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('counter_order_id');
             $table->decimal(column: 'price', total: 18, places: 8);
             $table->decimal(column: 'volume', total: 18, places: 8);
             $table->timestamps();

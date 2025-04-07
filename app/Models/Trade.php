@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property int $coin_id
  * @property TradeSide $side
- * @property int $maker_order_id
- * @property int $taker_order_id
+ * @property int $order_id
+ * @property int $counter_order_id
  * @property string $price
  * @property string $volume
  * @property \Illuminate\Support\Carbon $created_at
@@ -28,8 +28,8 @@ class Trade extends Model
         'user_id',
         'coin_id',
         'side',
-        'maker_order_id',
-        'taker_order_id',
+        'order_id',
+        'counter_order_id',
         'price',
         'volume',
     ];
@@ -67,16 +67,16 @@ class Trade extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Order>
      */
-    public function makerOrder()
+    public function order()
     {
-        return $this->belongsTo(Order::class, 'maker_order_id', 'id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Order>
      */
-    public function takerOrder()
+    public function counterOrder()
     {
-        return $this->belongsTo(Order::class, 'taker_order_id', 'id');
+        return $this->belongsTo(Order::class, 'counter_order_id', 'id');
     }
 }

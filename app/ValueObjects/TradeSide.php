@@ -8,21 +8,18 @@ enum TradeSide: string
 {
     use InteractsWithEnum;
 
-    case MAKER = 'MAKER';
-    case TAKER = 'TAKER';
+    case BUY_TAKER = 'BUY_TAKER';
+    case BUY_MAKER = 'BUY_MAKER';
+    case SELL_TAKER = 'SELL_TAKER';
+    case SELL_MAKER = 'SELL_MAKER';
 
     public function isMaker(): bool
     {
-        return $this === self::MAKER;
+        return $this === self::BUY_MAKER || $this === self::SELL_MAKER;
     }
 
     public function isTaker(): bool
     {
-        return $this === self::TAKER;
-    }
-
-    public function opposite(): self
-    {
-        return $this === self::MAKER ? self::TAKER : self::MAKER;
+        return $this === self::BUY_TAKER || $this === self::BUY_MAKER;
     }
 }

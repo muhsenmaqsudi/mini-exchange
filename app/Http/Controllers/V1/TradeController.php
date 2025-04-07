@@ -10,8 +10,9 @@ class TradeController extends Controller
 {
     public function index()
     {
-        return Trade::with(relations: ['makerOrder', 'takerOrder'])
+        return Trade::with(relations: ['user', 'coin', 'order', 'counterOrder'])
             ->where(column: 'user_id', operator: '=', value: Auth::id())
+            ->latest()
             ->get();
     }
 }
