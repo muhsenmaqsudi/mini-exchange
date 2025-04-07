@@ -6,7 +6,7 @@ use App\Casts\AsJson;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
+ * @property string $id
  * @property string $name
  * @property string $symbol
  * @property array $config
@@ -34,6 +34,7 @@ class Coin extends Model
     public function casts(): array
     {
         return [
+            'id' => 'string',
             'config' => AsJson::class,
         ];
     }

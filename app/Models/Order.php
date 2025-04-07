@@ -9,9 +9,9 @@ use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
- * @property int $user_id
- * @property int $coin_id
+ * @property string $id
+ * @property string $user_id
+ * @property string $coin_id
  * @property string $idempotency_key
  * @property OrderDirection $direction
  * @property OrderType $type
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasSnowflakes;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,6 +49,9 @@ class Order extends Model
     public function casts(): array
     {
         return [
+            'id' => 'string',
+            'user_id' => 'string',
+            'coin_id' => 'string',
             'direction' => OrderDirection::class,
             'type' => OrderType::class,
             'price' => 'decimal:8',

@@ -7,12 +7,12 @@ use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Model;
 
 /** 
- * @property int $id
- * @property int $user_id
- * @property int $coin_id
+ * @property string $id
+ * @property string $user_id
+ * @property string $coin_id
  * @property TradeSide $side
- * @property int $order_id
- * @property int $counter_order_id
+ * @property string $order_id
+ * @property string $counter_order_id
  * @property string $price
  * @property string $volume
  * @property \Illuminate\Support\Carbon $created_at
@@ -45,7 +45,12 @@ class Trade extends Model
     public function casts(): array
     {
         return [
+            'id' => 'string',
+            'user_id' => 'string',
+            'coin_id' => 'string',
             'side' => TradeSide::class,
+            'order_id' => 'string',
+            'counter_order_id' => 'string',
             'price' => 'decimal:8',
             'volume' => 'decimal:8',
         ];
