@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\ValueObjects\TradeSide;
+use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Model;
 
 /** 
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Trade extends Model
 {
+    use HasSnowflakes;
+    
     /**
      * The attributes that are mass assignable.
      *

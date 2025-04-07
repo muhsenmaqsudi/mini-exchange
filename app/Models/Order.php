@@ -5,6 +5,7 @@ namespace App\Models;
 use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderStatus;
 use App\ValueObjects\OrderType;
+use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
+    use HasSnowflakes;
+    
     /**
      * The attributes that are mass assignable.
      *

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('coins', function (Blueprint $table) {
-            $table->unsignedBigInteger(column: 'id')->primary();
+            $table->id();
             $table->string(column: 'name', length: 15);
             $table->string(column: 'symbol', length: 10);
             $table->jsonb(column: 'config')->nullable();
