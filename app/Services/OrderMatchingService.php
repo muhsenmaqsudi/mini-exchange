@@ -27,6 +27,7 @@ class OrderMatchingService
             ->where('volume', $newOrder->volume)
             ->where('status', OrderStatus::OPEN)
             ->orderBy('created_at', 'asc')
+            ->lockForUpdate()
             ->first();
 
         if (!$matchingOrder) {
