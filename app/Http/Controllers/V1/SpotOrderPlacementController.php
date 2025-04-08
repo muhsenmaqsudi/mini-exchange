@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Actions\StoreSpotOrderAction;
+use App\Exceptions\InvalidSymbolProvidedException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SpotOrderPlacementRequest;
 use App\Http\Validators\SpotOrderValidator;
@@ -27,7 +28,7 @@ class SpotOrderPlacementController extends Controller
         $spotOrderValidator = new SpotOrderValidator(dto: $orderDTO);
 
         if (! $spotOrderValidator->isProvidedSymbolCorrect()) {
-            throw new \Exception(message: 'Invalid symbol provided');
+            throw new InvalidSymbolProvidedException();
         }
 
         try {
