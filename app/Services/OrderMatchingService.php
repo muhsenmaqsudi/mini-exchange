@@ -8,6 +8,7 @@ use App\Models\Trade;
 use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderStatus;
 use App\ValueObjects\TradeSide;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class OrderMatchingService
@@ -20,7 +21,10 @@ class OrderMatchingService
             return;
         }
 
-        $matchingOrder = Order::query()
+        $lockKey = "order_lock:{$newOrder->id}";
+
+        Cache::lock($lockKey, 10)->block(5, function () use ($newOrder) {
+            $matchingOrder = Order::query()
             ->where('direction', $newOrder->direction->opposite())
             ->where('coin_id', $newOrder->coin_id)
             ->where('price', $newOrder->price)
@@ -30,11 +34,12 @@ class OrderMatchingService
             ->lockForUpdate()
             ->first();
 
-        if (!$matchingOrder) {
-            return;
-        }
+            if (!$matchingOrder) {
+                return;
+            }
 
-        $this->executeTrade($newOrder, $matchingOrder);
+            $this->executeTrade($newOrder, $matchingOrder);
+        });
     }
 
     private function executeTrade(Order $newOrder, Order $matchingOrder): void
