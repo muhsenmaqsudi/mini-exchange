@@ -16,14 +16,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->unsignedBigInteger(column: 'id')->primary();
-            $table->unsignedBigInteger(column: 'user_id');
-            $table->unsignedBigInteger(column: 'coin_id');
-            $table->uuid(column: 'idempotency_key');
+            $table->unsignedBigInteger(column: 'user_id')->index();
+            $table->unsignedBigInteger(column: 'coin_id')->index();
+            $table->uuid(column: 'idempotency_key')->unique();
             $table->enum(column: 'direction', allowed: OrderDirection::values());
             $table->enum(column: 'type', allowed: OrderType::values());
             $table->decimal(column: 'price', total: 18, places: 8);
             $table->decimal(column: 'volume', total: 18, places: 8);
-            $table->enum(column: 'status', allowed: OrderStatus::values());
+            $table->enum(column: 'status', allowed: OrderStatus::values())->index();
             $table->timestamps();
         });
     }

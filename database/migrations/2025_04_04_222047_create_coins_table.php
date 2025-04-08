@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('coins', function (Blueprint $table) {
             $table->id();
             $table->string(column: 'name', length: 15);
-            $table->string(column: 'symbol', length: 10);
+            $table->string(column: 'symbol', length: 10)->index();
             $table->jsonb(column: 'config')->nullable();
             $table->timestamps();
         });

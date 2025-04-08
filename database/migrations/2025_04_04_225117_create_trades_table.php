@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('trades', function (Blueprint $table) {
             $table->unsignedBigInteger(column: 'id')->primary();
-            $table->unsignedBigInteger(column: 'user_id');
-            $table->unsignedBigInteger(column: 'coin_id');
+            $table->unsignedBigInteger(column: 'user_id')->index();
+            $table->unsignedBigInteger(column: 'coin_id')->index();
             $table->enum(column: 'side', allowed: TradeSide::values());
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('counter_order_id');
