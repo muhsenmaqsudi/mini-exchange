@@ -25,6 +25,8 @@ return new class extends Migration
             $table->decimal(column: 'volume', total: 18, places: 8);
             $table->enum(column: 'status', allowed: OrderStatus::values())->index();
             $table->timestamps();
+
+            $table->index(columns: ['direction', 'status'], name: 'orders_direction_status_index');
         });
     }
 

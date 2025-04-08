@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderStatus;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class OrderBookController extends Controller
 {
@@ -15,23 +15,41 @@ class OrderBookController extends Controller
      */
     public function __invoke(): JsonResponse
     {
-        $bids = Order::query()
-            ->selectRaw(expression: 'price, SUM(volume) AS volume, CAST(price * SUM(volume) AS VARCHAR) AS sum')
-            ->where(column: 'status', operator: '=', value: OrderStatus::OPEN)
-            ->where(column: 'direction', operator: '=', value: OrderDirection::BUY)
-            ->orderBy(column: 'price', direction: 'desc')
-            ->take(value: 40)
-            ->groupBy('price')
-            ->get();
+        $bids = DB::select("
+            WITH price_volume_cte AS (
+                SELECT 
+                    price, 
+                    SUM(volume) AS volume
+                FROM orders
+                WHERE status = ? AND direction = ?
+                GROUP BY price
+            )
+            SELECT 
+                price, 
+                volume, 
+                (price * volume)::VARCHAR AS sum
+            FROM price_volume_cte
+            ORDER BY price DESC
+            LIMIT 40
+        ", [OrderStatus::OPEN->value, OrderDirection::BUY->value]);
 
-        $asks = Order::query()
-            ->selectRaw(expression: 'price, SUM(volume) AS volume, CAST(price * SUM(volume) AS VARCHAR) AS sum')
-            ->where(column: 'status', operator: '=', value: OrderStatus::OPEN)
-            ->where(column: 'direction', operator: '=', value: OrderDirection::SELL)
-            ->orderBy(column: 'price')
-            ->take(value: 40)
-            ->groupBy('price')
-            ->get();
+        $asks = DB::select("
+            WITH price_volume_cte AS (
+                SELECT 
+                    price, 
+                    SUM(volume) AS volume
+                FROM orders
+                WHERE status = ? AND direction = ?
+                GROUP BY price
+            )
+            SELECT 
+                price, 
+                volume, 
+                (price * volume)::VARCHAR AS sum
+            FROM price_volume_cte
+            ORDER BY price DESC
+            LIMIT 40
+        ", [OrderStatus::OPEN->value, OrderDirection::SELL->value]);
 
         return response()->json(data: [
             'data' => [
