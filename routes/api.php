@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\OrderBookController;
 use App\Http\Controllers\V1\OrderController;
 use App\Http\Controllers\V1\SpotOrderPlacementController;
 use App\Http\Controllers\V1\TradeController;
+use App\Http\Middleware\EnsureRequestIsIdempotent;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function() {
@@ -14,7 +15,9 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function() {
 
     Route::get('/coins', [CoinController::class, 'index'])->withoutMiddleware('auth:sanctum')->name('coins.index');
 
-    Route::post('/orders/spot', SpotOrderPlacementController::class)->name('orders.placement.spot');
+    Route::post('/orders/spot', SpotOrderPlacementController::class)
+        ->middleware(EnsureRequestIsIdempotent::class)
+        ->name('orders.placement.spot');
     
     Route::get('/orders/book', OrderBookController::class)->name('orders.book');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

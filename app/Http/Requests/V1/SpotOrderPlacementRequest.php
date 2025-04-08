@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use App\Http\DataObjects\SpotOrderPlacementDTO;
+use App\Http\Middleware\EnsureRequestIsIdempotent;
 use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderType;
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,7 +43,7 @@ class SpotOrderPlacementRequest extends FormRequest
             type: $this->enum(key: 'type', enumClass: OrderType::class),
             price: $this->string(key: 'price'),
             volume: $this->string(key: 'volume'),
-            idempotencyKey: $this->header(key: 'X-Idempotency-Key', default: Str::uuid()),
+            idempotencyKey: $this->header(key: EnsureRequestIsIdempotent::IDEMPOTENT_KEY, default: Str::uuid()),
         );
     }
 }
