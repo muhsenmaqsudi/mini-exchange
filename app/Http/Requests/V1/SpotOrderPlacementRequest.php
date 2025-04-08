@@ -7,7 +7,6 @@ use App\Http\Middleware\EnsureRequestIsIdempotent;
 use App\ValueObjects\OrderDirection;
 use App\ValueObjects\OrderType;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class SpotOrderPlacementRequest extends FormRequest
 {
@@ -32,7 +31,13 @@ class SpotOrderPlacementRequest extends FormRequest
             'type' => 'required|in:' . OrderType::implodes(),
             'price' => 'required|numeric|min:0.01',
             'volume' => 'required|numeric|min:0.01',
+            'x-idempotency-key' => 'required',
         ];
+    }
+
+    public function validationData()
+    {
+        return array_merge($this->headers->all(), $this->all());
     }
 
     public function toDTO(): SpotOrderPlacementDTO
@@ -43,7 +48,7 @@ class SpotOrderPlacementRequest extends FormRequest
             type: $this->enum(key: 'type', enumClass: OrderType::class),
             price: $this->string(key: 'price'),
             volume: $this->string(key: 'volume'),
-            idempotencyKey: $this->header(key: EnsureRequestIsIdempotent::IDEMPOTENT_KEY, default: Str::uuid()),
+            idempotencyKey: $this->header(key: EnsureRequestIsIdempotent::IDEMPOTENT_KEY),
         );
     }
 }
